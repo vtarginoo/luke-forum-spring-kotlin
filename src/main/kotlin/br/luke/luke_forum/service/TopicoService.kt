@@ -36,16 +36,17 @@ class TopicoService(
     }
 
 
-    fun cadastrar (form: NovoTopicoForm) {
+    fun cadastrar (form: NovoTopicoForm):TopicoView {
 
 
         val topico = topicoFormMapper.map(form)
         topico.id = topicos.size.toLong() + 1
-
         topicos = topicos.plus(topico)
+
+        return topicoViewMapper.map(topico)
     }
 
-    fun atualizar(form: AtualizacaoTopicoForm) {
+    fun atualizar(form: AtualizacaoTopicoForm):TopicoView {
 
         val t = topicos.stream().filter { t ->
             t.id == form.id
@@ -53,13 +54,14 @@ class TopicoService(
 
         t.titulo = form.titulo
         t.mensagem = form.mensagem
+
+        return topicoViewMapper.map(t)
     }
 
     fun deletar(id: Long) {
         val topico = topicos.stream().filter { t ->
             t.id == id
         }.findFirst().get()
-
         topicos = topicos.minus(topico)
     }
 
