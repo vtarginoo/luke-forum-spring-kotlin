@@ -2,27 +2,17 @@ package br.luke.luke_forum.service
 
 
 import br.luke.luke_forum.model.Usuario
+import br.luke.luke_forum.repository.UsuarioRepository
 import org.springframework.stereotype.Service
 
 
 
 @Service
-class UsuarioService(private var usuarios : List<Usuario>) {
-
-    init {
-        val usuario = Usuario(
-            id = 1,
-            nome = "Ana da Silva",
-            email = "ana@email.com.br"
-        )
-        usuarios = listOf(usuario)
-    }
-
-
+class UsuarioService(private val repository: UsuarioRepository) {
 
 
     fun buscarPorId(idUsuario: Long): Usuario {
-       return usuarios.stream().filter{u -> u.id == idUsuario}.findFirst().get()
+       return repository.getReferenceById(idUsuario)
 
     }
 
