@@ -3,6 +3,7 @@ package br.luke.luke_forum.service
 import br.luke.luke_forum.dto.AtualizacaoTopicoForm
 import br.luke.luke_forum.dto.NovoTopicoForm
 import br.luke.luke_forum.dto.TopicoView
+import br.luke.luke_forum.exception.NotFoundException
 import br.luke.luke_forum.mapper.TopicoFormMapper
 import br.luke.luke_forum.mapper.TopicoViewMapper
 import br.luke.luke_forum.model.Topico
@@ -15,7 +16,8 @@ import kotlin.collections.ArrayList
 class TopicoService(
     private var topicos: List<Topico> = ArrayList(),
     private val topicoViewMapper: TopicoViewMapper,
-    private val topicoFormMapper: TopicoFormMapper
+    private val topicoFormMapper: TopicoFormMapper,
+    private val notFoundMessage: String = "tópico não encontrado"
 
 ) {
 
@@ -30,7 +32,7 @@ class TopicoService(
     fun buscarPorId(id: Long): TopicoView {
         val t = topicos.stream().filter { t ->
             t.id == id
-        }.findFirst().get()
+        }.findFirst().orElseThrow{NotFoundException(notFoundMessage)}
 
         return topicoViewMapper.map(t)
     }
@@ -50,7 +52,7 @@ class TopicoService(
 
         val t = topicos.stream().filter { t ->
             t.id == form.id
-        }.findFirst().get()
+        }.findFirst().orElseThrow{NotFoundException(notFoundMessage)}
 
         t.titulo = form.titulo
         t.mensagem = form.mensagem
@@ -61,7 +63,8 @@ class TopicoService(
     fun deletar(id: Long) {
         val topico = topicos.stream().filter { t ->
             t.id == id
-        }.findFirst().get()
+        }.findFirst().orElseThrow{NotFoundException(notFoundMessage)}
+
         topicos = topicos.minus(topico)
     }
 
