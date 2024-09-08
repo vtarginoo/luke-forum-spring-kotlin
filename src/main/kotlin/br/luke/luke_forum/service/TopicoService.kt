@@ -2,6 +2,7 @@ package br.luke.luke_forum.service
 
 import br.luke.luke_forum.dto.AtualizacaoTopicoForm
 import br.luke.luke_forum.dto.NovoTopicoForm
+import br.luke.luke_forum.dto.TopicoPorCategoriaDto
 import br.luke.luke_forum.dto.TopicoView
 import br.luke.luke_forum.exception.NotFoundException
 import br.luke.luke_forum.mapper.TopicoFormMapper
@@ -66,6 +67,11 @@ class TopicoService(
     fun deletar(id: Long) {
         repository.deleteById(id)
 
+    }
+
+    fun relatorio():List<TopicoPorCategoriaDto> {
+
+       return repository.relatorio()
     }
 
 

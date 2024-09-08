@@ -2,6 +2,7 @@ package br.luke.luke_forum.controller
 
 import br.luke.luke_forum.dto.AtualizacaoTopicoForm
 import br.luke.luke_forum.dto.NovoTopicoForm
+import br.luke.luke_forum.dto.TopicoPorCategoriaDto
 import br.luke.luke_forum.dto.TopicoView
 import br.luke.luke_forum.service.TopicoService
 import jakarta.transaction.Transactional
@@ -78,5 +79,13 @@ class TopicoController(private val service: TopicoService) {
         service.deletar(id)
 
     }
+
+    @GetMapping("/relatorio")
+    fun relatorio () :List<TopicoPorCategoriaDto> {
+
+        return service.relatorio()
+
+    }
+
 
 }

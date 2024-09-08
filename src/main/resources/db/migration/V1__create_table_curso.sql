@@ -5,4 +5,4 @@ create table curso(
     primary key(id)
 );
 
-insert into curso values(1, 'Kotlin', 'Pogramacao');
+insert into curso values(1, 'Kotlin', 'Programacao');
